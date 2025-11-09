@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}{{ post.title }} - IMY's Blog{% endblock %}
+
+{% block content %}
+    <h4>{{ post.title }}</h4>
+    <div class="post-content">
+        {{ post.content|safe }}
+    </div>
+    <p class="row"></p>
+    <a href="/" class="button">Go back</a>
+{% endblock %}

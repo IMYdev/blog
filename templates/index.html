@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<header class="row">
+        <div class="twelve columns">
+            <h4><a href="/" style="text-decoration: none; color: inherit;">IMY's Blog</a></h4>
+            <p>Welcome to my humble yapping area.</p>
+        </div>
+</header>
+    {% for post in posts %}
+    <div>
+        <a href="{{ url_for('post', filename=post.filename) }}"><h6>{{ post.title }}</h6></a>
+        <p><small>{{ post.date }}</small></p>
+        <p>{{ post.preview }}</p>
+        <p class="row"></p>
+    </div>
+    {% endfor %}
+{% endblock %}
