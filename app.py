@@ -78,7 +78,7 @@ def get_posts():
     return posts
 
 def render_post(filename):
-    filepath = os.path.join(POSTS_DIR, f"{filename}.md")
+    filepath = os.path.join(POSTS_DIR, f"{filename}")
     return parse_post(filepath)
 
 @app.route('/')
