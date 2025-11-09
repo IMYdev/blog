@@ -1,12 +1,16 @@
 import os
 import re
+import requests
 import markdown
 from flask import Flask, render_template
 from waitress import serve
 
 app = Flask(__name__)
 
-POSTS_DIR = 'posts'
+# GitHub repo info
+GITHUB_REPO = "IMYdev/blog_posts"
+GITHUB_API_URL = f"https://api.github.com/repos/{GITHUB_REPO}/contents"
+RAW_BASE_URL = f"https://raw.githubusercontent.com/{GITHUB_REPO}/main"
 
 MONTHS = {
     '01': 'January',
@@ -29,7 +33,7 @@ def format_date(date_str):
         return 'Unknown Date'
 
     day, month, year = parts
-    month_name = MONTHS.get(month, None)
+    month_name = MONTHS.get(month.zfill(2), None)
     if not month_name:
         return 'Unknown Date'
 
@@ -37,13 +41,9 @@ def format_date(date_str):
         year = '20' + year
 
     day = str(int(day))
-
     return f"{month_name} {day}, {year}"
 
-def parse_post(filepath):
-    with open(filepath, 'r', encoding='utf-8') as f:
-        content = f.read()
-
+def parse_post(filename, content):
     lines = [line.strip() for line in content.split('\n') if line.strip()]
     if lines and re.match(r'^\d{1,2}/\d{1,2}/\d{2,4}$', lines[0]):
         date = format_date(lines[0])
@@ -55,7 +55,6 @@ def parse_post(filepath):
     clean_text = re.sub('<[^<]+?>', '', html_content)
     preview = clean_text[:50] + '...' if len(clean_text) > 50 else clean_text
 
-    filename = filepath.split("/")[1]
     title = filename.replace('.md', '').replace('-', ' ').title()
 
     return {
@@ -67,19 +66,36 @@ def parse_post(filepath):
     }
 
 def get_posts():
+    try:
+        res = requests.get(GITHUB_API_URL)
+        res.raise_for_status()
+        files = res.json()
+    except Exception as e:
+        print("Error fetching posts:", e)
+        return []
+
     posts = []
-    for filename in os.listdir(POSTS_DIR):
-        if filename.endswith('.md'):
-            filepath = os.path.join(POSTS_DIR, filename)
-            post_data = parse_post(filepath)
-            posts.append(post_data)
-    
+    for file in files:
+        if file['name'].endswith('.md'):
+            raw_url = f"{RAW_BASE_URL}/{file['name']}"
+            try:
+                content = requests.get(raw_url).text
+                post_data = parse_post(file['name'], content)
+                posts.append(post_data)
+            except Exception as e:
+                print(f"Error fetching {file['name']}: {e}")
+
     posts.sort(key=lambda x: x['date'], reverse=True)
     return posts
 
 def render_post(filename):
-    filepath = os.path.join(POSTS_DIR, f"{filename}")
-    return parse_post(filepath)
+    raw_url = f"{RAW_BASE_URL}/{filename}"
+    try:
+        content = requests.get(raw_url).text
+        return parse_post(filename, content)
+    except Exception as e:
+        print(f"Error fetching post {filename}: {e}")
+        return None
 
 @app.route('/')
 def index():
