@@ -44,14 +44,25 @@ def format_date(date_str):
     return f"{month_name} {day}, {year}"
 
 def parse_post(filename, content):
-    lines = [line.strip() for line in content.split('\n') if line.strip()]
-    if lines and re.match(r'^\d{1,2}/\d{1,2}/\d{2,4}$', lines[0]):
-        date = format_date(lines[0])
-        content = '\n'.join(lines[1:])
+    all_lines = content.split('\n')
+    
+    first_non_empty_line = None
+    first_line_index = -1
+    for i, line in enumerate(all_lines):
+        if line.strip():
+            first_non_empty_line = line.strip()
+            first_line_index = i
+            break
+            
+    content_to_render = content
+    
+    if first_non_empty_line and re.match(r'^\d{1,2}/\d{1,2}/\d{2,4}$', first_non_empty_line):
+        date = format_date(first_non_empty_line)
+        content_to_render = '\n'.join(all_lines[first_line_index + 1:])
     else:
         date = 'Unknown Date'
-
-    html_content = markdown.markdown(content)
+        
+    html_content = markdown.markdown(content_to_render)
     clean_text = re.sub('<[^<]+?>', '', html_content)
     preview = clean_text[:50] + '...' if len(clean_text) > 50 else clean_text
 
