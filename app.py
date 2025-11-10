@@ -65,7 +65,7 @@ def parse_post(filename, content):
     clean_text = re.sub('<[^<]+?>', '', html_content)
     preview = clean_text[:50] + '...' if len(clean_text) > 50 else clean_text
 
-    title = filename.replace('.md', '').replace('-', ' ').title()
+    title = filename.replace('.md', '')
 
     return {
         'title': title,
