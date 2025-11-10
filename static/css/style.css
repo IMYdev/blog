@@ -38,3 +38,6 @@ a {
 .container {
     max-width: 100%;
 }
+image {
+    margin: 10px 10px 10px 10px;
+}
