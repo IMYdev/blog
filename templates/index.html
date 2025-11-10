@@ -8,7 +8,7 @@
 </header>
     {% for post in posts %}
     <div>
-        <a href="{{ url_for('post', filename=post.filename) }}"><h6>{{ post.title }}</h6></a>
+        <a href="{{ url_for('post', slug=post.slug) }}"><h6>{{ post.title }}</h6></a>
         <p><small>{{ post.date }}</small></p>
         <p>{{ post.preview }}</p>
         <p class="row"></p>
