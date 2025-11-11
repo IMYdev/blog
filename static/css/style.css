@@ -11,7 +11,7 @@ body {
 code {
     background-color: #222222;
     font-family: monospace;
-    font-size: large;
+    font-size: clamp(16px, 1.2vw, 48px);
 }
 
 .button {
@@ -24,7 +24,6 @@ h4 {
 
 h6 {
     padding-top: 2%;
-    font-size: 40px;
 }
 
 .row {
@@ -43,5 +42,11 @@ a {
 img {
   display: block;
   margin: auto;
-  width: 70%;
+  width: 100%;
+}
+p {
+    font-size: clamp(18px, 1.2vw, 48px);
+}
+ul {
+    font-size: clamp(16px, 1.1vw, 32px);
 }
