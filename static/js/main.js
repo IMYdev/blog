@@ -20,9 +20,10 @@ function insertCarousel(images, paragraph) {
   swiperContainer.appendChild(swiperWrapper);
 
   images.forEach(origImg => {
+    const parent = origImg.parentNode.tagName === 'A' ? origImg.parentNode : origImg;
     const slide = document.createElement('div');
     slide.className = 'swiper-slide';
-    slide.appendChild(origImg.cloneNode(true));
+    slide.appendChild(parent.cloneNode(true));
     swiperWrapper.appendChild(slide);
   });
 
@@ -53,3 +54,4 @@ function insertCarousel(images, paragraph) {
     },
   });
 }
+
