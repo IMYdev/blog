@@ -41,7 +41,7 @@ a {
 }
 
 img {
-    margin: 10px 10px 10px 10px;
-    width: 50%;
-    height: auto;
+  display: block;
+  margin: auto;
+  width: 70%;
 }
