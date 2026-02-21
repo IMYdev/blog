@@ -2,7 +2,7 @@ import re
 import requests
 import markdown
 import datetime
-from flask import Flask, render_template
+from flask import Flask, render_template, jsonify
 from waitress import serve
 
 app = Flask(__name__)
@@ -139,6 +139,30 @@ def post(slug):
         return "Post not found", 404
         
     return render_template('post.html', post=post_data)
+
+@app.route('/api/posts')
+def api_posts():
+    posts = get_posts()
+    json_posts = []
+    for p in posts:
+        post_copy = p.copy()
+        if isinstance(post_copy['sort_date'], datetime.date):
+            post_copy['sort_date'] = post_copy['sort_date'].isoformat()
+        json_posts.append(post_copy)
+    return jsonify(json_posts)
+
+@app.route('/api/post/<slug>')
+def api_post_detail(slug):
+    filename = slug + '.md'
+    post = render_post(filename)
+    
+    if post is None:
+        return jsonify({"error": "Post not found"}), 404
+        
+    if isinstance(post['sort_date'], datetime.date):
+        post['sort_date'] = post['sort_date'].isoformat()
+        
+    return jsonify(post)
 
 if __name__ == '__main__':
     serve(app)
