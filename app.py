@@ -73,9 +73,16 @@ def parse_post(filename, content):
     slug = filename.replace('.md', '')
     
     content_to_render = '\n'.join(content_lines)
-    html_content = markdown.markdown(content_to_render)
+    html_content = markdown.markdown(content_to_render, extensions=['toc'])
     clean_text = re.sub('<[^<]+?>', '', html_content)
     preview = clean_text[:150] + '...' if len(clean_text) > 150 else clean_text
+
+    headings = []
+    for match in re.finditer(r'<h2[^>]*id="([^"]*)"[^>]*>(.*?)</h2>', html_content, re.DOTALL):
+        headings.append({
+            'id': match.group(1),
+            'text': re.sub(r'<[^>]+>', '', match.group(2)).strip()
+        })
 
     return {
         'title': title,
@@ -84,7 +91,8 @@ def parse_post(filename, content):
         'date': display_date,
         'sort_date': sortable_date,
         'preview': preview,
-        'content': html_content
+        'content': html_content,
+        'headings': headings
     }
 
 def get_posts():

@@ -1,17 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
-<header class="row">
-        <div class="twelve columns">
-            <h4><a href="/" style="text-decoration: none; color: inherit;">IMY's Blog</a></h4>
-            <p>Welcome to my humble yapping area.</p>
-        </div>
+<header class="lecp-mb-8">
+    <p class="lecp-eyebrow">IMY's Blog</p>
+    <h1 class="lecp-title lecp-mt-2">Welcome to my humble yapping area.</h1>
 </header>
-    {% for post in posts %}
-    <div>
-        <a href="{{ url_for('post', slug=post.slug) }}"><h4>{{ post.title }}</h4></a>
-        <p><small>{{ post.date }}</small></p>
-        <p>{{ post.preview }}</p>
-        <p class="row"></p>
+
+<section>
+    <h2 class="lecp-section-title lecp-mb-5">Posts</h2>
+    <div class="lecp-grid">
+        {% for post in posts %}
+        <a class="lecp-tile lecp-col-s-6" href="{{ url_for('post', slug=post.slug) }}">
+            <span class="lecp-meta">{{ post.date }}</span>
+            <h3 class="lecp-tile-label">{{ post.title }}</h3>
+            <p class="lecp-body">{{ post.preview }}</p>
+            <span class="lecp-tile-arrow" aria-hidden="true">→</span>
+        </a>
+        {% endfor %}
     </div>
-    {% endfor %}
+</section>
 {% endblock %}

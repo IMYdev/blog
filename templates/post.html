@@ -3,10 +3,32 @@
 {% block title %}{{ post.title }} - IMY's Blog{% endblock %}
 
 {% block content %}
-    <h4>{{ post.title }}</h4>
-    <div class="post-content" id="post-content">
-        {{ post.content|safe }}
-    </div>
-    <p class="row"></p>
-    <a href="/" class="button">Go back</a>
+<div class="post-layout{% if not post.headings %} post-layout--single{% endif %}">
+    {% if post.headings %}
+    <aside class="post-nav" aria-label="On this page">
+        <p class="lecp-caption lecp-mt-2">On this page</p>
+        <nav class="lecp-nav lecp-mt-4" id="post-nav">
+            {% for heading in post.headings %}
+            <a class="lecp-nav-item" href="#{{ heading.id }}">
+                <span class="lecp-nav-item-index">{%- if loop.index < 10 %}0{% endif %}{{ loop.index }}</span>
+                        <span class="lecp-nav-item-label">{{ heading.text }}</span>
+                        <span class="lecp-nav-item-arrow" aria-hidden="true">→</span>
+            </a>
+            {% endfor %}
+        </nav>
+        <a href="/" class="lecp-btn lecp-btn--ghost post-nav-back">&larr; Back to posts</a>
+    </aside>
+    {% endif %}
+
+    <article class="post-main">
+        <header class="lecp-mb-6">
+            <p class="lecp-eyebrow">{{ post.date }}</p>
+            <h1 class="lecp-title lecp-mt-2">{{ post.title }}</h1>
+        </header>
+
+        <div class="post-content" id="post-content">
+            {{ post.content|safe }}
+        </div>
+    </article>
+</div>
 {% endblock %}

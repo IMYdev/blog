@@ -4,7 +4,7 @@ Lightweight blog engine that fetches Markdown posts from a GitHub repository and
 ## Features
 - Upload a new post's Markdown file to the configured repo and it will appear on the blog's main page after a refresh.
 
-- Compact and agile with a responsive layout, based on [Flask](https://flask.palletsprojects.com/en/stable/) and [skeleton css](https://getskeleton.com/).
+- Compact and agile with a responsive layout, based on [Flask](https://flask.palletsprojects.com/en/stable/) and [LECP CSS](https://lecp.imy.com.ly).
 
 ## Requirements
 Install the Python dependencies listed in `requirements.txt`:
