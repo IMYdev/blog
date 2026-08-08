@@ -73,7 +73,7 @@ def parse_post(filename, content):
     slug = filename.replace('.md', '')
     
     content_to_render = '\n'.join(content_lines)
-    html_content = markdown.markdown(content_to_render, extensions=['toc'])
+    html_content = markdown.markdown(content_to_render, extensions=['pymdownx.tilde', 'toc'])
     clean_text = re.sub('<[^<]+?>', '', html_content)
     preview = clean_text[:150] + '...' if len(clean_text) > 150 else clean_text
 

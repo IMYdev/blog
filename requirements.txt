@@ -2,3 +2,4 @@ Flask
 Markdown
 waitress
 requests
+pymdown-extensions
