@@ -1,0 +1,3 @@
+[submodule "static/vendor/LECP-CSS"]
+	path = static/vendor/LECP-CSS
+	url = https://github.com/IMYdev/LECP-CSS.git

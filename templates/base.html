@@ -5,22 +5,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}IMY's Blog{% endblock %}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/lecp.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='vendor/LECP-CSS/lecp.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </head>
 
-<body class="lecp-mt-3">
+<body>
     <a class="lecp-skip-link" href="#main">Skip to content</a>
-    <main id="main" class="lecp-container">
-        {% block content %}{% endblock %}
-    </main>
-    <footer class="lecp-container lecp-mt-8">
-        <p class="lecp-caption">IMY's Blog &middot; powered by <a href="https://github.com/IMYdev/LECP-CSS">LECP CSS</a>
-        </p>
-    </footer>
+    {% block body %}{% endblock %}
 </body>
 
 </html>

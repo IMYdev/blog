@@ -1,21 +1,28 @@
 {% extends "base.html" %}
-{% block content %}
-<header class="lecp-mb-8">
-    <p class="lecp-eyebrow">IMY's Blog</p>
-    <h1 class="lecp-title lecp-mt-2">Welcome to my humble yapping area.</h1>
-</header>
+{% block body %}
+<main id="main" class="lecp-container lecp-shell-content">
+    <header class="lecp-mb-8">
+        <p class="lecp-eyebrow">IMY's Blog</p>
+        <h1 class="lecp-title lecp-mt-2">Welcome to my humble yapping area.</h1>
+    </header>
 
-<section>
-    <h2 class="lecp-section-title lecp-mb-5">Posts</h2>
-    <div class="lecp-grid">
-        {% for post in posts %}
-        <a class="lecp-tile lecp-col-s-6" href="{{ url_for('post', slug=post.slug) }}">
-            <span class="lecp-meta">{{ post.date }}</span>
-            <h3 class="lecp-tile-label">{{ post.title }}</h3>
-            <p class="lecp-body">{{ post.preview }}</p>
-            <span class="lecp-tile-arrow" aria-hidden="true">→</span>
-        </a>
-        {% endfor %}
-    </div>
-</section>
+    <section id="posts">
+        <h2 class="lecp-section-title lecp-mb-5">Posts</h2>
+        <div class="lecp-grid">
+            {% for post in posts %}
+            <a class="lecp-tile lecp-col-s-6" href="{{ url_for('post', slug=post.slug) }}">
+                <span class="lecp-meta">{{ post.date }}</span>
+                <h3 class="lecp-tile-label">{{ post.title }}</h3>
+                <p class="lecp-body">{{ post.preview }}</p>
+                <span class="lecp-tile-arrow" aria-hidden="true">→</span>
+            </a>
+            {% endfor %}
+        </div>
+    </section>
+</main>
+
+<footer class="lecp-container lecp-mt-8 lecp-mb-8">
+    <p class="lecp-caption">IMY's Blog &middot; powered by <a href="https://github.com/IMYdev/LECP-CSS">LECP CSS</a>
+    </p>
+</footer>
 {% endblock %}
